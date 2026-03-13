@@ -1,0 +1,9 @@
+:root {
+  --background-primary: rgba(30, 30, 30, 0.95);
+  --background-hover: rgba(50, 50, 50, 0.95);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --accent-color: #2196f3;
+  --border-radius: 6px;
+  --transition-speed: 0.2s;
+}

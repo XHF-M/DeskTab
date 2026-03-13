@@ -1,0 +1,22 @@
+[package]
+name = "desktab"
+version = "0.1.0"
+description = "A lightweight desktop drawer tool for Windows"
+authors = ["DeskTab Team"]
+license = ""
+repository = ""
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+tauri = { version = "1.5", features = [ "dialog-open", "dialog-confirm", "dialog-message", "dialog-ask", "dialog-save", "window-start-dragging", "window-maximize", "global-shortcut-all", "window-minimize", "window-close", "window-unmaximize", "window-unminimize", "shell-open", "global-shortcut", "window-show", "window-hide"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+winapi = { version = "0.3", features = ["winbase", "fileapi"] }
+# tauri-plugin-global-shortcut = "0.1"  # Not needed - global-shortcut is included in tauri core
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

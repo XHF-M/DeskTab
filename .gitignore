@@ -1,0 +1,6 @@
+.ace-tool/
+.claude
+.omc
+node_modules
+dist
+src-tauri/target/
