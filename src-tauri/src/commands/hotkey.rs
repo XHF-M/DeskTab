@@ -1,15 +1,23 @@
-use tauri::{AppHandle, GlobalShortcutManager};
+use tauri::{AppHandle, GlobalShortcutManager, Manager};
 
 /// 注册全局快捷键
 pub fn register_global_shortcuts(app: &AppHandle) -> Result<(), String> {
     let mut shortcut_manager = app.global_shortcut_manager();
 
+    // 克隆 AppHandle 用于闭包
+    let app_handle_toggle = app.clone();
+    let app_handle_show = app.clone();
+
     // 注册 Ctrl+Alt+D 作为切换快捷键
     let toggle_shortcut = "Ctrl+Alt+D";
     shortcut_manager
         .register(toggle_shortcut, move || {
-            // 触发快捷键事件
-            println!("Toggle shortcut pressed");
+            // 发送事件到前端
+            app_handle_toggle
+                .emit_all("global-shortcut-toggle", ())
+                .unwrap_or_else(|e| {
+                    eprintln!("Failed to emit toggle event: {}", e);
+                });
         })
         .map_err(|e| format!("Failed to register toggle shortcut: {}", e))?;
 
@@ -17,8 +25,12 @@ pub fn register_global_shortcuts(app: &AppHandle) -> Result<(), String> {
     let show_shortcut = "Alt+`";
     shortcut_manager
         .register(show_shortcut, move || {
-            // 触发显示事件
-            println!("Show shortcut pressed");
+            // 发送事件到前端
+            app_handle_show
+                .emit_all("global-shortcut-show", ())
+                .unwrap_or_else(|e| {
+                    eprintln!("Failed to emit show event: {}", e);
+                });
         })
         .map_err(|e| format!("Failed to register show shortcut: {}", e))?;
 
